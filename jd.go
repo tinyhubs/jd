@@ -122,10 +122,6 @@ func (o *jsonObjectImpl) ToMap() Map {
 	return nil
 }
 
-//func (o *jsonObjectImpl) Accept(visitor Visitor) int {
-//	return o.impl.Accept(visitor)
-//}
-
 //------------------------------------------------------------------
 
 type jsonMapImpl struct {
