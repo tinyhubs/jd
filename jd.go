@@ -2,9 +2,9 @@ package jd
 
 import (
 	"container/list"
-	"io"
 	"encoding/json"
 	"fmt"
+	"io"
 )
 
 const (
@@ -305,19 +305,19 @@ type jsonStringImpl struct {
 	value string
 }
 
-func (s*jsonStringImpl) Type() uint32 {
+func (s *jsonStringImpl) Type() uint32 {
 	return TYPE_STRING
 }
 
-func (s*jsonStringImpl) String() string {
+func (s *jsonStringImpl) String() string {
 	return s.value
 }
 
-func (s*jsonStringImpl) ToString() String {
+func (s *jsonStringImpl) ToString() String {
 	return s
 }
 
-func (s*jsonStringImpl) Accept(visitor Visitor) int {
+func (s *jsonStringImpl) Accept(visitor Visitor) int {
 	return visitor.VisitString(s)
 }
 
@@ -328,35 +328,35 @@ type jsonNumberImpl struct {
 	value float64
 }
 
-func (u*jsonNumberImpl) Type() uint32 {
+func (u *jsonNumberImpl) Type() uint32 {
 	return TYPE_NUMBER
 }
 
-func (u*jsonNumberImpl) Int() int {
+func (u *jsonNumberImpl) Int() int {
 	return int(u.value)
 }
 
-func (u*jsonNumberImpl) Int64() int64 {
+func (u *jsonNumberImpl) Int64() int64 {
 	return int64(u.value)
 }
 
-func (u*jsonNumberImpl) Uint64() uint64 {
+func (u *jsonNumberImpl) Uint64() uint64 {
 	return uint64(u.value)
 }
 
-func (u*jsonNumberImpl) Float32() float32 {
+func (u *jsonNumberImpl) Float32() float32 {
 	return float32(u.value)
 }
 
-func (u*jsonNumberImpl) Float64() float64 {
+func (u *jsonNumberImpl) Float64() float64 {
 	return float64(u.value)
 }
 
-func (u*jsonNumberImpl) ToNumber() Number {
+func (u *jsonNumberImpl) ToNumber() Number {
 	return u
 }
 
-func (u*jsonNumberImpl) Number() interface{} {
+func (u *jsonNumberImpl) Number() interface{} {
 	//	检查是否有小数部分:
 	i64 := int64(u.value)
 	postfix := u.value - float64(i64)
@@ -367,11 +367,11 @@ func (u*jsonNumberImpl) Number() interface{} {
 	return i64
 }
 
-func (u*jsonNumberImpl) Accept(visitor Visitor) int {
+func (u *jsonNumberImpl) Accept(visitor Visitor) int {
 	return visitor.VisitNumber(u)
 }
 
-func (u*jsonNumberImpl) String() string {
+func (u *jsonNumberImpl) String() string {
 	return fmt.Sprintf("%v", u.Number())
 }
 
@@ -488,34 +488,34 @@ type jsonSimplePrinter struct {
 	options PrintOptions
 }
 
-func (p*jsonSimplePrinter) VisitNull(v Null) int {
+func (p *jsonSimplePrinter) VisitNull(v Null) int {
 	p.writer.Write([]byte(v.String()))
 	return 0
 }
 
-func (p*jsonSimplePrinter) VisitBool(v Bool) int {
+func (p *jsonSimplePrinter) VisitBool(v Bool) int {
 	p.writer.Write([]byte(v.String()))
 	return 0
 }
 
-func (p*jsonSimplePrinter) VisitString(v String) int {
+func (p *jsonSimplePrinter) VisitString(v String) int {
 	p.writer.Write([]byte(`"`))
 	p.writer.Write([]byte(v.String()))
 	p.writer.Write([]byte(`"`))
 	return 0
 }
 
-func (p*jsonSimplePrinter) VisitNumber(v Number) int {
+func (p *jsonSimplePrinter) VisitNumber(v Number) int {
 	p.writer.Write([]byte(v.String()))
 	return 0
 }
 
-func (p*jsonSimplePrinter) EnterArray(Array) int {
+func (p *jsonSimplePrinter) EnterArray(Array) int {
 	p.writer.Write([]byte("["))
 	return 0
 }
 
-func (p*jsonSimplePrinter) VisitArrayItem(index int, value Object) int {
+func (p *jsonSimplePrinter) VisitArrayItem(index int, value Object) int {
 	if 0 != index {
 		p.writer.Write([]byte(","))
 	}
@@ -524,17 +524,17 @@ func (p*jsonSimplePrinter) VisitArrayItem(index int, value Object) int {
 	return 0
 }
 
-func (p*jsonSimplePrinter) LeaveArray(Array) int {
+func (p *jsonSimplePrinter) LeaveArray(Array) int {
 	p.writer.Write([]byte("]"))
 	return 0
 }
 
-func (p*jsonSimplePrinter) EnterMap(Map) int {
+func (p *jsonSimplePrinter) EnterMap(Map) int {
 	p.writer.Write([]byte("{"))
 	return 0
 }
 
-func (p*jsonSimplePrinter) VisitMapItem(index int, key string, value Object) int {
+func (p *jsonSimplePrinter) VisitMapItem(index int, key string, value Object) int {
 	if 0 != index {
 		p.writer.Write([]byte(`,`))
 	}
@@ -546,7 +546,7 @@ func (p*jsonSimplePrinter) VisitMapItem(index int, key string, value Object) int
 	return 0
 }
 
-func (p*jsonSimplePrinter) LeaveMap(Map) int {
+func (p *jsonSimplePrinter) LeaveMap(Map) int {
 	p.writer.Write([]byte("}"))
 	return 0
 }

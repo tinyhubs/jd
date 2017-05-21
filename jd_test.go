@@ -1,10 +1,10 @@
 package jd
 
 import (
-	"testing"
 	"bytes"
-	"github.com/tinyhubs/et/assert"
 	"fmt"
+	"github.com/tinyhubs/et/assert"
+	"testing"
 )
 
 // This example uses a Decoder to decode a stream of distinct JSON values.
